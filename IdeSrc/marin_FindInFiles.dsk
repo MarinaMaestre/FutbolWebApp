@@ -1,0 +1,14 @@
+[Header]
+Mask=*.src;*.vw;*.sl;*.dg;*.rv;*.bp;*.pkg;*.wo;*.dd;*.inc;*.tpl;*.dfo;*.asp;*.asa;*.html;*.css;*.js
+Active=0
+SubDirectories=1
+WholeWordOnly=0
+RegularExpression=0
+SearchWhere=0
+Location=C:\Users\marin\Documents\DAM\Marina\2 DAM\Practicas\Tareas DATACONTROL\Dataflex\IdeSrc\marin_FindInFiles.dsk
+[C:\Users\marin\Documents\DAM\Marina\2 DAM\Practicas\Tareas DATACONTROL\Dataflex\AppSrc]
+IsEnabled=1
+[C:\Users\marin\Documents\DAM\Marina\2 DAM\Practicas\Tareas DATACONTROL\Dataflex\DDSrc]
+IsEnabled=1
+[C:\Users\marin\Documents\DAM\Marina\2 DAM\Practicas\Tareas DATACONTROL\Dataflex\AppHtml]
+IsEnabled=1

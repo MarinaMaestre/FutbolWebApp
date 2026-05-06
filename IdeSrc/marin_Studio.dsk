@@ -1,0 +1,30 @@
+[Workspace]
+CurrentProject=WebApp.src
+Location=C:\Users\marin\Documents\DAM\Marina\2 DAM\Practicas\Tareas DATACONTROL\Dataflex\IdeSrc\marin_Studio.dsk
+CreateNew=3
+[TabWindows]
+GroupCount=1
+HorizontalGroups=1
+[TabGroup0]
+GroupSize=40
+SelectedTab=1
+[Window0]
+Filename=C:\Users\marin\Documents\DAM\Marina\2 DAM\Practicas\Tareas DATACONTROL\Dataflex\AppSrc\WebApp.src
+ViewType=1
+Top=26
+Left=0
+Bottom=868
+Right=1317
+CursorLine=112
+CursorColumn=46
+TabIndex=0
+TabGroup=0
+[Window1]
+Filename=C:\Users\marin\Documents\DAM\Marina\2 DAM\Practicas\Tareas DATACONTROL\Dataflex\AppSrc\Dashboard.wo
+ViewType=102
+Top=26
+Left=0
+Bottom=868
+Right=1317
+TabIndex=1
+TabGroup=0
