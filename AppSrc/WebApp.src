@@ -2,12 +2,6 @@
 Use cConnection.pkg
 Use cWebMenuItem.pkg
 
-Object oApplication is a cApplication
-    Object oConnection is a cConnection
-        Use LoginEncryption.pkg
-    End_Object
-End_Object
-
 Object oWebApp is a cWebApp
     Set psTheme to "Df_Material"
     Set peAlignView to alignCenter
@@ -187,12 +181,14 @@ Object oWebApp is a cWebApp
     Use Login.wo
     Use WebResourceManager.wo
     
-    Use Dashboard.wo
     Use Entrenador.wo
     Use Equipo.wo
     Use Jugador.wo
     Use Liga.wo
     Use Posicion.wo
+    
+    Use Dashboard.wo
+    
     Set phoDefaultView to oDashboard
 
 End_Object
