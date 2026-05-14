@@ -1,4 +1,14 @@
-﻿Use AllWebAppClasses.pkg
+﻿/* TAREA: ORDEN DE EVENTOS EN LA NAVEGACIÓN (Lo que pasa al pulsar mi botón)
+  1. OnGetNavigateForwardData: Se prepara la "maleta" con los datos en la Liga.
+  2. OnNavigateForward: Se llega al Select de Equipos y se abre la maleta.
+  3. OnLoad: Se carga la vista de destino.
+  4. OnShow: La vista de equipos aparece en pantalla.
+  5. OnSaved/OnDelete: Si editamos algo en el camino.
+  6. OnGetNavigateBackData: Preparamos datos para volver a la Liga.
+  7. OnNavigateBack: Recibimos los datos de vuelta en la pantalla original.
+*/
+
+Use AllWebAppClasses.pkg
 Use cConnection.pkg
 Use cWebMenuItem.pkg
 

@@ -61,6 +61,33 @@ Object oZoomLiga is a cWebView
             Set peLabelPosition to lpTop
             Set psLabel to "EquiposMax"
         End_Object 
+        
+        // TAREA: AÑADIMOS EL BOTÓN DE NAVEGACIÓN "FROM PARENT"
+        Object oVerEquiposBtn is a cWebButton
+            Set psCaption to "Ver Equipos de esta Liga"
+            Set piColumnSpan to 12
+            Set piColumnIndex to 0
+            Set psCSSClass to "WebButton_Success" 
+
+            // TAREA EXPLICACIÓN:
+            // Registramos la ruta hacia el Select de Equipos.
+            // Al ser una relación jerárquica (Liga -> Equipos), 
+            // DataFlex usará los Data Dictionaries para filtrar automáticamente.
+            WebRegisterPath ntNavigateForward oSelectEquipo
+
+            Procedure OnClick
+                Send NavigatePath
+            End_Procedure
+
+            // TAREA EVENTO 1: OnGetNavigateForwardData
+            // Se produce en el InvokingObject (este botón dentro de ZoomLiga)
+            // Aquí es donde se "prepara la maleta" con el RowID de la liga actual.
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData
+                Forward Send OnGetNavigateForwardData (&NavigateData)
+                // Comentario: Aquí NavigateData.sRowID lleva la ID de la liga seleccionada.
+            End_Procedure
+        End_Object 
+        // Fin Botón tarea
     End_Object 
 
     Object oActionGroup is a cWebMenuGroup
