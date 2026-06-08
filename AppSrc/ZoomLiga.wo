@@ -7,8 +7,11 @@ Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
+Use cWebList.pkg
+Use cWebColumn.pkg
 
 Use cligaDataDictionary.dd
+Use cequipoDataDictionary.dd
 
 Object oZoomLiga is a cWebView
     Set piColumnCount to 12
@@ -22,8 +25,12 @@ Object oZoomLiga is a cWebView
     Object oliga_DD is a cligaDataDictionary
     End_Object 
 
-    Set Main_DD To oliga_DD
-    Set Server  To oliga_DD
+    Object oequipo_DD is a cequipoDataDictionary
+        Set DDO_Server to oliga_DD
+    End_Object 
+
+    Set Main_DD to oliga_DD
+    Set Server  to oliga_DD
 
 
     Object oWebMainPanel is a cWebPanel
@@ -62,32 +69,29 @@ Object oZoomLiga is a cWebView
             Set psLabel to "EquiposMax"
         End_Object 
         
-        // TAREA: AÑADIMOS EL BOTÓN DE NAVEGACIÓN "FROM PARENT"
-        Object oVerEquiposBtn is a cWebButton
-            Set psCaption to "Ver Equipos de esta Liga"
+        // TAREA CORRECCIÓN: En vez del botón, añadimos la lista de equipos incrustada
+        // Esto responde a la opción 2 del From Parent (equipos de esa liga en su propio Zoom)
+        Object oEquiposIncrustadosList is a cWebList
+            Set Server to oequipo_DD
             Set piColumnSpan to 12
-            Set piColumnIndex to 0
-            Set psCSSClass to "WebButton_Success" 
+            Set pbFillHeight to True
+            Set piHeight to 300
+            Set psCaption to "Equipos de esta Liga"
 
-            // TAREA EXPLICACIÓN:
-            // Registramos la ruta hacia el Select de Equipos.
-            // Al ser una relación jerárquica (Liga -> Equipos), 
-            // DataFlex usará los Data Dictionaries para filtrar automáticamente.
-            WebRegisterPath ntNavigateForward oSelectEquipo
+            Object oequipoNombre is a cWebColumn
+                Entry_Item equipo.Nombre
+                Set psCaption to "Nombre del Equipo"
+                Set piWidth to 300
+            End_Object
 
-            Procedure OnClick
-                Send NavigatePath
-            End_Procedure
-
-            // TAREA EVENTO 1: OnGetNavigateForwardData
-            // Se produce en el InvokingObject (este botón dentro de ZoomLiga)
-            // Aquí es donde se "prepara la maleta" con el RowID de la liga actual.
-            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData
-                Forward Send OnGetNavigateForwardData (&NavigateData)
-                // Comentario: Aquí NavigateData.sRowID lleva la ID de la liga seleccionada.
-            End_Procedure
-        End_Object 
-        // Fin Botón tarea
+            // Columna corregida con el ID para evitar el error de referencia hacia adelante 4306
+            Object oequipoID is a cWebColumn
+                Entry_Item equipo.ID
+                Set psCaption to "ID Equipo"
+                Set piWidth to 100
+            End_Object
+        End_Object
+        
     End_Object 
 
     Object oActionGroup is a cWebMenuGroup
@@ -191,4 +195,4 @@ Object oZoomLiga is a cWebView
 
     End_Procedure
 
-End_Object 
+End_Object

@@ -1,5 +1,5 @@
 Compiling Program: C:\DataFlexProjects\WebAppFutbol\AppSrc\WebApp.src
-Memory Available: 6940147712
+Memory Available: 4708868096
 1>/* TAREA: ORDEN DE EVENTOS EN LA NAVEGACIÓN (Lo que pasa al pulsar mi botón)  1. OnGetNavigateForwardData: Se prepara la "maleta" con los datos en la Liga.  2. OnNavigateForward: Se llega al Select de Equipos y se abre la maleta.  3. OnLoad: Se carga la vista de destino.  4. OnShow: La vista de equipos aparece en pantalla.  5. OnSaved/OnDelete: Si editamos algo en el camino.  6. OnGetNavigateBackData: Preparamos datos para volver a la Liga.  7. OnNavigateBack: Recibimos los datos de vuelta en la pantalla original.*/
 1>
 1>Use AllWebAppClasses.pkg
@@ -1747,14 +1747,14 @@ Including file: jugadorposicion.fd    (C:\DataFlexProjects\WebAppFutbol\DDSrc\ju
 37603>>>            Set pbPromptButton to True
 37604>>>        End_Object
 37605>>>            
-37605>>>            // BOTÓN NAVEGACIÓN "FROM CHILD" (De Jugador a su Equipo)
+37605>>>            // BOTÓN NAVEGACIÓN "FROM CHILD" (De Jugador a SELECT Equipo)
 37605>>>        Object oVerEquipoBtn is a cWebButton
 37607>>>            Set psCaption to "Ver Ficha del Equipo"
 37608>>>            Set piColumnSpan to 12
 37609>>>            Set psCSSClass to "WebButton_Info"
 37610>>>
 37610>>>            // TAREA: Registramos ruta al ZOOM del equipo (Padre)
-37610>>>            WebRegisterPath ntNavigateForward oZoomEquipo
+37610>>>            WebRegisterPath ntNavigateForward oSelectEquipo
 37616>>>
 37616>>>            Procedure OnClick
 37619>>>                Send NavigatePath
@@ -2873,8 +2873,11 @@ Including file: ZoomLiga.wo    (C:\DataFlexProjects\WebAppFutbol\AppSrc\ZoomLiga
 38546>>>Use cWebMenuGroup.pkg
 38546>>>Use cWebMenuItem.pkg
 38546>>>Use cWebForm.pkg
+38546>>>Use cWebList.pkg
+38546>>>Use cWebColumn.pkg
 38546>>>
 38546>>>Use cligaDataDictionary.dd
+38546>>>Use cequipoDataDictionary.dd
 38546>>>
 38546>>>Object oZoomLiga is a cWebView
 38548>>>    Set piColumnCount to 12
@@ -2888,72 +2891,73 @@ Including file: ZoomLiga.wo    (C:\DataFlexProjects\WebAppFutbol\AppSrc\ZoomLiga
 38555>>>    Object oliga_DD is a cligaDataDictionary
 38557>>>    End_Object 
 38558>>>
-38558>>>    Set Main_DD To oliga_DD
-38559>>>    Set Server  To oliga_DD
-38560>>>
-38560>>>
-38560>>>    Object oWebMainPanel is a cWebPanel
-38562>>>        Set piColumnCount to 12
-38563>>>        WebSetResponsive piColumnCount rmMobile to 4
+38558>>>    Object oequipo_DD is a cequipoDataDictionary
+38560>>>        Set DDO_Server to oliga_DD
+38561>>>    End_Object 
+38562>>>
+38562>>>    Set Main_DD to oliga_DD
+38563>>>    Set Server  to oliga_DD
 38564>>>
-38564>>>        Object oligaNombre is a cWebForm
-38566>>>            Entry_Item liga.Nombre
-38567>>>            Set piColumnSpan to 12
-38568>>>            Set piColumnIndex to 0
-38569>>>            Set peLabelPosition to lpTop
-38570>>>            Set psLabel to "Nombre"
-38571>>>        End_Object 
-38572>>>
-38572>>>        Object oligaPais is a cWebForm
-38574>>>            Entry_Item liga.Pais
-38575>>>            Set piColumnSpan to 10
-38576>>>            Set piColumnIndex to 0
-38577>>>            Set peLabelPosition to lpTop
-38578>>>            Set psLabel to "Pais"
-38579>>>        End_Object 
-38580>>>
-38580>>>        Object oligaEquipos is a cWebForm
-38582>>>            Entry_Item liga.Equipos
-38583>>>            Set piColumnSpan to 2
-38584>>>            Set piColumnIndex to 0
-38585>>>            Set peLabelPosition to lpTop
-38586>>>            Set psLabel to "Equipos"
-38587>>>        End_Object 
-38588>>>
-38588>>>        Object oligaEquiposMax is a cWebForm
-38590>>>            Entry_Item liga.EquiposMax
-38591>>>            Set piColumnSpan to 2
-38592>>>            Set piColumnIndex to 0
-38593>>>            Set peLabelPosition to lpTop
-38594>>>            Set psLabel to "EquiposMax"
-38595>>>        End_Object 
-38596>>>        
-38596>>>        // TAREA: AÑADIMOS EL BOTÓN DE NAVEGACIÓN "FROM PARENT"
-38596>>>        Object oVerEquiposBtn is a cWebButton
-38598>>>            Set psCaption to "Ver Equipos de esta Liga"
-38599>>>            Set piColumnSpan to 12
-38600>>>            Set piColumnIndex to 0
-38601>>>            Set psCSSClass to "WebButton_Success" 
-38602>>>
-38602>>>            // TAREA EXPLICACIÓN:
-38602>>>            // Registramos la ruta hacia el Select de Equipos.
-38602>>>            // Al ser una relación jerárquica (Liga -> Equipos), 
-38602>>>            // DataFlex usará los Data Dictionaries para filtrar automáticamente.
-38602>>>            WebRegisterPath ntNavigateForward oSelectEquipo
-38608>>>
-38608>>>            Procedure OnClick
-38611>>>                Send NavigatePath
-38612>>>            End_Procedure
+38564>>>
+38564>>>    Object oWebMainPanel is a cWebPanel
+38566>>>        Set piColumnCount to 12
+38567>>>        WebSetResponsive piColumnCount rmMobile to 4
+38568>>>
+38568>>>        Object oligaNombre is a cWebForm
+38570>>>            Entry_Item liga.Nombre
+38571>>>            Set piColumnSpan to 12
+38572>>>            Set piColumnIndex to 0
+38573>>>            Set peLabelPosition to lpTop
+38574>>>            Set psLabel to "Nombre"
+38575>>>        End_Object 
+38576>>>
+38576>>>        Object oligaPais is a cWebForm
+38578>>>            Entry_Item liga.Pais
+38579>>>            Set piColumnSpan to 10
+38580>>>            Set piColumnIndex to 0
+38581>>>            Set peLabelPosition to lpTop
+38582>>>            Set psLabel to "Pais"
+38583>>>        End_Object 
+38584>>>
+38584>>>        Object oligaEquipos is a cWebForm
+38586>>>            Entry_Item liga.Equipos
+38587>>>            Set piColumnSpan to 2
+38588>>>            Set piColumnIndex to 0
+38589>>>            Set peLabelPosition to lpTop
+38590>>>            Set psLabel to "Equipos"
+38591>>>        End_Object 
+38592>>>
+38592>>>        Object oligaEquiposMax is a cWebForm
+38594>>>            Entry_Item liga.EquiposMax
+38595>>>            Set piColumnSpan to 2
+38596>>>            Set piColumnIndex to 0
+38597>>>            Set peLabelPosition to lpTop
+38598>>>            Set psLabel to "EquiposMax"
+38599>>>        End_Object 
+38600>>>        
+38600>>>        // TAREA CORRECCIÓN: En vez del botón, añadimos la lista de equipos incrustada
+38600>>>        // Esto responde a la opción 2 del From Parent (equipos de esa liga en su propio Zoom)
+38600>>>        Object oEquiposIncrustadosList is a cWebList
+38602>>>            Set Server to oequipo_DD
+38603>>>            Set piColumnSpan to 12
+38604>>>            Set pbFillHeight to True
+38605>>>            Set piHeight to 300
+38606>>>            Set psCaption to "Equipos de esta Liga"
+38607>>>
+38607>>>            Object oequipoNombre is a cWebColumn
+38609>>>                Entry_Item equipo.Nombre
+38610>>>                Set psCaption to "Nombre del Equipo"
+38611>>>                Set piWidth to 300
+38612>>>            End_Object
 38613>>>
-38613>>>            // TAREA EVENTO 1: OnGetNavigateForwardData
-38613>>>            // Se produce en el InvokingObject (este botón dentro de ZoomLiga)
-38613>>>            // Aquí es donde se "prepara la maleta" con el RowID de la liga actual.
-38613>>>            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData
-38616>>>                Forward Send OnGetNavigateForwardData (&NavigateData)
-38618>>>                // Comentario: Aquí NavigateData.sRowID lleva la ID de la liga seleccionada.
-38618>>>            End_Procedure
-38619>>>        End_Object 
-38620>>>        // Fin Botón tarea
+38613>>>            // Columna corregida con el ID para evitar el error de referencia hacia adelante 4306
+38613>>>            Object oequipoID is a cWebColumn
+38615>>>                Entry_Item equipo.ID
+38616>>>                Set psCaption to "ID Equipo"
+38617>>>                Set piWidth to 100
+38618>>>            End_Object
+38619>>>        End_Object
+38620>>>        
 38620>>>    End_Object 
 38621>>>
 38621>>>    Object oActionGroup is a cWebMenuGroup
@@ -3060,7 +3064,7 @@ Including file: ZoomLiga.wo    (C:\DataFlexProjects\WebAppFutbol\AppSrc\ZoomLiga
 38710>>>
 38710>>>    End_Procedure
 38711>>>
-38711>>>End_Object 
+38711>>>End_Object
 38712>    Use SelectLiga.wo
 Including file: SelectLiga.wo    (C:\DataFlexProjects\WebAppFutbol\AppSrc\SelectLiga.wo)
 38712>>>// C:\DataFlexProjects\WebAppFutbol\AppSrc\SelectLiga.wo
@@ -3559,14 +3563,14 @@ Including file: SelectPosicion.wo    (C:\DataFlexProjects\WebAppFutbol\AppSrc\Se
 39126>Send StartWebApp of oWebApp
 39127>
 Summary
-Memory Available: 6935863296
+Memory Available: 4704739328
 Total Warnings : 0
 Total Errors   : 0
-Total Symbols  : 25633
+Total Symbols  : 25626
 Total Resources: 0
 Total Commands : 39126
 Total Windows  : 0
 Total Pages    : 0
-Static Data    : 485373
-Message area   : 262889
+Static Data    : 485457
+Message area   : 263028
 Total Blocks   : 17373

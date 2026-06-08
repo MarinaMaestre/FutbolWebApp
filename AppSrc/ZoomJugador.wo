@@ -73,14 +73,14 @@ Object oZoomJugador is a cWebView
             Set pbPromptButton to True
         End_Object
             
-            // BOTÓN NAVEGACIÓN "FROM CHILD" (De Jugador a su Equipo)
+            // BOTÓN NAVEGACIÓN "FROM CHILD" (De Jugador a SELECT Equipo)
         Object oVerEquipoBtn is a cWebButton
             Set psCaption to "Ver Ficha del Equipo"
             Set piColumnSpan to 12
             Set psCSSClass to "WebButton_Info"
 
             // TAREA: Registramos ruta al ZOOM del equipo (Padre)
-            WebRegisterPath ntNavigateForward oZoomEquipo
+            WebRegisterPath ntNavigateForward oSelectEquipo
 
             Procedure OnClick
                 Send NavigatePath
